@@ -21,6 +21,7 @@ public class Password {
   private String value;
   private Type type;
   private Status status;
+  private Instant callingAt;
 
   public Password() {
   }

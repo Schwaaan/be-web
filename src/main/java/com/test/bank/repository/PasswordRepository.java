@@ -14,4 +14,5 @@ public interface PasswordRepository extends JpaRepository<Password, Integer> {
 
   Optional<Password> findFirstByDeletedIsFalseAndTypeAndStatusOrderByCreatedAtAsc(Type type, Status status);
 
+  Optional<Password> findFirstByDeletedIsFalseAndStatusOrderByCreatedAtAsc(Status calling);
 }

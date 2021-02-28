@@ -1,6 +1,7 @@
 package com.test.bank.controllers;
 
 import com.test.bank.domain.model.Password;
+import com.test.bank.domain.model.Status;
 import com.test.bank.domain.service.PasswordService;
 import com.test.bank.repository.PasswordRepository;
 import com.test.bank.utils.Assert;
@@ -35,7 +36,12 @@ public class PasswordController {
     return passwordRepository.findAll(pageable);
   }
 
-  @GetMapping("/v1/passwords/calls")
+  @GetMapping("/v1/passwords/callings")
+  public Password findLastPasswordCalling() {
+    return Assert.found(passwordRepository.findFirstByDeletedIsFalseAndStatusOrderByCreatedAtAsc(Status.CALLING), "Nenhuma senha sendo chamada");
+  }
+
+  @PutMapping("/v1/passwords/calls")
   public Password callPassword() {
     return passwordService.getPassword();
   }

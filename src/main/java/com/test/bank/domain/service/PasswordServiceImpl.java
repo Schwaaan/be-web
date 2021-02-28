@@ -5,6 +5,7 @@ import com.test.bank.domain.model.Status;
 import com.test.bank.domain.model.Type;
 import com.test.bank.repository.PasswordRepository;
 import com.test.bank.utils.Assert;
+import java.time.Instant;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,18 @@ public class PasswordServiceImpl implements PasswordService {
     Optional<Password> passwordOptional = passwordRepository
         .findFirstByDeletedIsFalseAndTypeAndStatusOrderByCreatedAtAsc(Type.PREFERENCIAL,
             Status.PENDING);
-    return passwordOptional.orElseGet(() -> Assert.found(passwordRepository
-        .findFirstByDeletedIsFalseAndTypeAndStatusOrderByCreatedAtAsc(Type.NORMAL,
-            Status.PENDING), "Password not found"));
+    if (!passwordOptional.isPresent()) {
+      Password password = Assert.found(passwordRepository
+          .findFirstByDeletedIsFalseAndTypeAndStatusOrderByCreatedAtAsc(Type.NORMAL,
+              Status.PENDING), "Password not found");
+      return this.updatePassword(password);
+    }
+    return this.updatePassword(passwordOptional.get());
+  }
+
+  private Password updatePassword(Password password) {
+    password.setStatus(Status.CALLING);
+    password.setCallingAt(Instant.now());
+    return passwordRepository.save(password);
   }
 }
