@@ -38,7 +38,7 @@ public class PasswordController {
 
   @GetMapping("/v1/passwords/callings")
   public Password findLastPasswordCalling() {
-    return Assert.found(passwordRepository.findFirstByDeletedIsFalseAndStatusOrderByCreatedAtAsc(Status.CALLING), "Nenhuma senha sendo chamada");
+    return Assert.found(passwordRepository.findFirstByDeletedIsFalseAndStatusOrderByCreatedAtAsc(Status.CALLING), "No password being called");
   }
 
   @PutMapping("/v1/passwords/calls")
