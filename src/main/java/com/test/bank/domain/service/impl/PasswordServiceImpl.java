@@ -1,8 +1,9 @@
-package com.test.bank.domain.service;
+package com.test.bank.domain.service.impl;
 
 import com.test.bank.domain.model.Password;
 import com.test.bank.domain.model.Status;
 import com.test.bank.domain.model.Type;
+import com.test.bank.domain.service.PasswordService;
 import com.test.bank.repository.PasswordRepository;
 import com.test.bank.utils.Assert;
 import java.time.Instant;

@@ -46,11 +46,6 @@ public class PasswordController {
     return passwordService.getPassword();
   }
 
-  @PutMapping("/v1/passwords/{id}")
-  public Password callPassword(@PathVariable("id") String id) {
-    return Assert.found(passwordRepository.findOneByIdAndDeletedIsFalse(id), "Password not found");
-  }
-
   @DeleteMapping("/v1/passwords")
   public void reloadPasswords() {
     passwordRepository.deleteAll();
